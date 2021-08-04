@@ -248,6 +248,29 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def cross_join(self):
+        """
+        Description: 
+            This function is used to perform the cross join.
+            It combines all the possibilities of the two tables.
+            Also known as cartesian join,as it provies the cartesian product of
+            associated tables
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT employee.employee_no,employee.employee_name,dept.location FROM employee CROSS JOIN dept")
+            result_set = myCursor.fetchall()
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
     
 if __name__ == "__main__":
@@ -264,3 +287,5 @@ if __name__ == "__main__":
     joins.left_outer_join()
     print("\nRight Outer Join")
     joins.right_outer_join()
+    print("\nCross Join")
+    joins.cross_join()
