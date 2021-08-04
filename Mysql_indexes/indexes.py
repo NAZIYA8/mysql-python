@@ -120,6 +120,22 @@ class Indexes:
         finally:
             self.mydb.close()
 
+    def singleColumnIndex(self):
+        """
+        Description: 
+            This function is used to create index on a single column.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("CREATE INDEX customer_name_idx ON customer (customer_name)")
+            print("successfully created index\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 
 if __name__ == "__main__":
@@ -129,3 +145,4 @@ if __name__ == "__main__":
     print("Successfully created table")
     indexes.insert_data()
     indexes.show_data()
+    indexes.singleColumnIndex()
