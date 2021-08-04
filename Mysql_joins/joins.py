@@ -183,6 +183,20 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def inner_join(self):
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT employee_name,location FROM employee INNER JOIN dept ON employee.dept_no = dept.dept_no")
+            result_set = myCursor.fetchall()
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+            
+
 
     
 if __name__ == "__main__":
@@ -193,4 +207,6 @@ if __name__ == "__main__":
     joins.createTable2()
     joins.insert_data2()
     joins.show_data()
+    print("\nInner join")
+    joins.inner_join()
     
