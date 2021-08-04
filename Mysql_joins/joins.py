@@ -156,6 +156,34 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def show_data(self):
+        """
+        Description: 
+            This function is used to show the data.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()    
+            myCursor.execute("SELECT * from employee")
+            result_set = myCursor.fetchall()
+            #print(result_set)
+            for data in result_set:
+                print(data)
+            print("\n")
+            myCursor.execute("SELECT * from dept")
+            result_set2 = myCursor.fetchall()
+            #print(result_set)
+            for data2 in result_set2:
+                print(data2)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
     
 if __name__ == "__main__":
     joins = Joins()
@@ -164,4 +192,5 @@ if __name__ == "__main__":
     joins.insert_data1()
     joins.createTable2()
     joins.insert_data2()
+    joins.show_data()
     
