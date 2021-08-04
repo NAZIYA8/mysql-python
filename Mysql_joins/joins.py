@@ -226,6 +226,28 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def right_outer_join(self):
+        """
+        Description: 
+            This function is used to perform the right outer join.
+            It gives all the values from right table along with the matching values
+            from left table. If there are no matching values it returns null.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT employee_name,dept_name FROM employee RIGHT OUTER JOIN dept ON employee.dept_no = dept.dept_no")
+            result_set = myCursor.fetchall()
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
     
 if __name__ == "__main__":
@@ -240,3 +262,5 @@ if __name__ == "__main__":
     joins.inner_join()
     print("\n Left Outer Join")
     joins.left_outer_join()
+    print("\nRight Outer Join")
+    joins.right_outer_join()
