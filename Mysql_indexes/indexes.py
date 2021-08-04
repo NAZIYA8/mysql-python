@@ -154,6 +154,43 @@ class Indexes:
         finally:
             self.mydb.close()
 
+    def display_all_indexes(self):
+        """
+        Description: 
+            This function is used to display all indexes created.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SHOW INDEX FROM customer")
+            result = myCursor.fetchall()
+            print(result)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def drop_index(self):
+        """
+        Description: 
+            This function is used to drop index from table.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("ALTER TABLE customer DROP INDEX customer_country_idx")
+            self.mydb.commit()
+            print("Successfully dropped index")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     indexes = Indexes()
@@ -164,3 +201,6 @@ if __name__ == "__main__":
     indexes.show_data()
     indexes.singleColumnIndex()
     indexes.composite_index()
+    indexes.display_all_indexes()
+    indexes.drop_index()
+    indexes.display_all_indexes()
