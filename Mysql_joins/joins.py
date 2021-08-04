@@ -106,10 +106,62 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def createTable2(self):
+        """
+        Description: 
+            This function is used to create a table department in database.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            dept_record ='''CREATE TABLE dept(
+                                dept_no char(2),
+                                dept_name varchar(150) not null,
+                                location varchar(150)
+                                )'''
+            myCursor.execute("DROP TABLE IF EXISTS dept")
+            myCursor.execute(dept_record)
+            myCursor.execute("SHOW TABLES")
+            for tb in myCursor:
+                print(tb)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def insert_data2(self):
+        """
+        Description: 
+            This function is used to insert data into table
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            insert_formula = "INSERT into dept (dept_no,dept_name,location) VALUES (%s,%s,%s)"
+            insert_records = [  ('10','sales','mumbai'),
+                                 ('20','hr','delhi'),
+                                  ('30','accounts','chennai'),
+                                   ('40','production','bengaluru'),
+                                ]
+            myCursor.executemany(insert_formula,insert_records)
+            self.mydb.commit()
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
     
 if __name__ == "__main__":
     joins = Joins()
     joins.create_database()
     joins.createTable1()
     joins.insert_data1()
+    joins.createTable2()
+    joins.insert_data2()
     
