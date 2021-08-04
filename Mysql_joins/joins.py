@@ -184,6 +184,14 @@ class Joins:
             self.mydb.close()
 
     def inner_join(self):
+        """
+        Description: 
+            This function is used to perform the inner join.
+            It selects the records that have matching values in both tables.
+        Pararmeter:
+            self is an instance of the object
+        """
+
         self.create_connection()
         try:
             myCursor = self.mydb.cursor()
@@ -196,8 +204,30 @@ class Joins:
         finally:
             self.mydb.close()
 
+    def left_outer_join(self):
+        """
+        Description: 
+            This function is used to perform the left outer join.
+            It gives all the values from left table along with the matching values
+            from right table.If there are no matching values it returns null.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT employee_name,dept_name FROM employee LEFT OUTER JOIN dept ON employee.dept_no = dept.dept_no")
+            result_set = myCursor.fetchall()
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 
+    
 if __name__ == "__main__":
     joins = Joins()
     joins.create_database()
@@ -208,4 +238,5 @@ if __name__ == "__main__":
     joins.show_data()
     print("\nInner join")
     joins.inner_join()
-    
+    print("\n Left Outer Join")
+    joins.left_outer_join()
