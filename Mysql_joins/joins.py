@@ -195,10 +195,9 @@ class Joins:
             logger.error(err)
         finally:
             self.mydb.close()
-            
 
 
-    
+
 if __name__ == "__main__":
     joins = Joins()
     joins.create_database()
