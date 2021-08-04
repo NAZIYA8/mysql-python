@@ -76,9 +76,56 @@ class Indexes:
         finally:
             self.mydb.close()
 
+    def insert_data(self):
+        """
+        Description: 
+            This function is used to insert data into a database
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            insert_formula = "INSERT into customer (customer_id, customer_name,customer_city, customer_country) VALUES (%s,%s,%s,%s)"
+            insert_records = [  ('1','Kinjal','Bangalore','India'),
+                                ('2', 'Dolly','Michigan','USA'),
+                                ('3','John','Mysore','India'),
+                                ('4','Tom','Toronto','Canada')]
+            myCursor.executemany(insert_formula,insert_records)
+            self.mydb.commit()
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+    
+    def show_data(self):
+        """
+        Description: 
+            This function is used to show the data.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()    
+            myCursor.execute("SELECT * from customer")
+            result_set = myCursor.fetchall()
+            #print(result_set)
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 
 if __name__ == "__main__":
     indexes = Indexes()
     indexes.create_database()
     indexes.createTable()
     print("Successfully created table")
+    indexes.insert_data()
+    indexes.show_data()
