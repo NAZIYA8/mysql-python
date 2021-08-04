@@ -137,6 +137,23 @@ class Indexes:
         finally:
             self.mydb.close()
 
+    def composite_index(self):
+        """
+        Description: 
+            This function is used to create index on two or more columns.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("CREATE INDEX customer_country_idx ON customer(customer_city,customer_country)")
+            print("successfully created index\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     indexes = Indexes()
@@ -146,3 +163,4 @@ if __name__ == "__main__":
     indexes.insert_data()
     indexes.show_data()
     indexes.singleColumnIndex()
+    indexes.composite_index()
