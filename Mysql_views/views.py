@@ -121,9 +121,28 @@ class Views:
         finally:
             self.mydb.close()
 
+    def create_view(self):
+        """
+        Description: 
+            This function is used to create view from the table.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("CREATE VIEW employee_detail AS SELECT employee_name,employee_city,employee_age FROM employees ")
+            print("successfully created view\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 if __name__ == "__main__":
     views = Views()
     views.create_database()
     views.createTable()
     views.insert_data()
     views.show_data()
+    views.create_view()
