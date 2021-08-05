@@ -162,6 +162,29 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def in_parameter(self):
+        """
+        Description: 
+            This function is used to create procedure and calling 
+            it by passing IN parameter.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute('''
+                                CREATE PROCEDURE get_student (IN var1 INT)  
+                                BEGIN  
+                                SELECT * FROM student_info LIMIT var1;  
+                                SELECT COUNT(student_code) AS Total_Student FROM student_info;
+                                END 
+                                ''')
+            print("Successfully created procedure with IN parameter\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 
 
@@ -173,3 +196,4 @@ if __name__ == "__main__":
     storedProcedure.show_data()
     storedProcedure.create_procedure()
     storedProcedure.call_procedure()
+    storedProcedure.in_parameter()
