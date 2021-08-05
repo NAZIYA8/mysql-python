@@ -244,6 +244,46 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def inout_parameter(self):
+        """
+        Description: 
+            This function is used to create procedure and calling 
+            it by passing INOUT parameter.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute('''
+                                CREATE PROCEDURE display_marks (INOUT var1 INT)   
+                                BEGIN  
+                                SELECT marks INTO var1 FROM student_info WHERE student_id = var1;   
+                                END 
+                                ''')
+            print("Successfully created procedure with INOUT parameter\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def call_inout_procedure(self):
+        """
+        Description: 
+            This function is used to call INOUT procedure
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            result = myCursor.callproc('display_marks',['3'])
+            print(result)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     storedProcedure = StoredProcedure()
@@ -257,3 +297,5 @@ if __name__ == "__main__":
     storedProcedure.call_in_procedure()
     storedProcedure.out_parameter()
     storedProcedure.call_out_procedure()
+    storedProcedure.inout_parameter()
+    storedProcedure.call_inout_procedure()
