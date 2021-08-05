@@ -186,6 +186,24 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def call_in_procedure(self):
+        """
+        Description: 
+            This function is used to call IN procedure
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.callproc('get_student',[4, ])
+            for result in myCursor.stored_results():
+                print(result.fetchall())
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 
 if __name__ == "__main__":
@@ -197,3 +215,4 @@ if __name__ == "__main__":
     storedProcedure.create_procedure()
     storedProcedure.call_procedure()
     storedProcedure.in_parameter()
+    storedProcedure.call_in_procedure()
