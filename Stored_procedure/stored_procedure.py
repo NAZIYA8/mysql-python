@@ -144,6 +144,24 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def call_procedure(self):
+        """
+        Description: 
+            This function is used to call procedure
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.callproc('get_merit_student')
+            for result in myCursor.stored_results():
+                print(result.fetchall())
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 
 
@@ -154,3 +172,4 @@ if __name__ == "__main__":
     storedProcedure.insert_data()
     storedProcedure.show_data()
     storedProcedure.create_procedure()
+    storedProcedure.call_procedure()
