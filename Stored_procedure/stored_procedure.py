@@ -204,6 +204,29 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def out_parameter(self):
+        """
+        Description: 
+            This function is used to create procedure and calling 
+            it by passing OUT parameter.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute('''
+                                CREATE PROCEDURE display_max_mark (OUT highestmark INT)  
+                                BEGIN  
+                                SELECT MAX(marks) INTO highestmark FROM student_info; 
+                                END 
+                                ''')
+            print("Successfully created procedure with OUT parameter\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 
 if __name__ == "__main__":
@@ -216,3 +239,4 @@ if __name__ == "__main__":
     storedProcedure.call_procedure()
     storedProcedure.in_parameter()
     storedProcedure.call_in_procedure()
+    storedProcedure.out_parameter()
