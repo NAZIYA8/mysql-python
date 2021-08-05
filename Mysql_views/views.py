@@ -183,8 +183,25 @@ class Views:
         self.create_connection()
         try:
             myCursor = self.mydb.cursor()
-            myCursor.execute("DROP VIEW employee_detail ")
+            myCursor.execute("DROP VIEW employee_info ")
             print("\n Successfully dropped view")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def rename_view(self):
+        """
+        Description: 
+            This function is used to rename view.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("RENAME TABLE employee_detail TO employee_info ")
+            print("\n Successfully renamed view")
         except Exception as err:
             logger.error(err)
         finally:
@@ -201,4 +218,6 @@ if __name__ == "__main__":
     views.display_view()
     views.update_view()
     views.display_view()
+    views.rename_view()
     views.drop_view()
+    
