@@ -173,6 +173,24 @@ class Views:
         finally:
             self.mydb.close()
 
+    def drop_view(self):
+        """
+        Description: 
+            This function is used to drop view.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("DROP VIEW employee_detail ")
+            print("\n Successfully dropped view")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 if __name__ == "__main__":
     views = Views()
     views.create_database()
@@ -183,3 +201,4 @@ if __name__ == "__main__":
     views.display_view()
     views.update_view()
     views.display_view()
+    views.drop_view()
