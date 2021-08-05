@@ -138,6 +138,23 @@ class Views:
         finally:
             self.mydb.close()
 
+    def display_view(self):
+        """
+        Description: 
+            This function is used to display view.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT * from employee_detail ")
+            result = myCursor.fetchall()
+            print(result)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 if __name__ == "__main__":
     views = Views()
@@ -146,3 +163,4 @@ if __name__ == "__main__":
     views.insert_data()
     views.show_data()
     views.create_view()
+    views.display_view()
