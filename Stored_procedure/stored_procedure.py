@@ -121,9 +121,36 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def create_procedure(self):
+        """
+        Description: 
+            This function is used to create procedure
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute('''
+                                CREATE PROCEDURE get_merit_student() 
+                                BEGIN  
+                                SELECT * FROM student_info WHERE marks > 70;  
+                                SELECT COUNT(student_code) AS Total_Student FROM student_info;
+                                END 
+                                ''')
+            print("successfully created procedure\n")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
+
+
 if __name__ == "__main__":
     storedProcedure = StoredProcedure()
     storedProcedure.create_database()
     storedProcedure.createTable()
     storedProcedure.insert_data()
     storedProcedure.show_data()
+    storedProcedure.create_procedure()
