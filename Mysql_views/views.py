@@ -63,9 +63,9 @@ class Views:
             employee_record ='''CREATE TABLE employees(
                                 employee_id int not null,
                                 employee_name varchar(150) not null,
-                                employee_country varchar(150),
+                                employee_city varchar(150),
                                 employee_age int,
-                                employee_salary int(10)
+                                employee_salary int(10),
                                 PRIMARY KEY (employee_id)
                                 )'''
             myCursor.execute("DROP TABLE IF EXISTS employees")
@@ -89,7 +89,7 @@ class Views:
         self.create_connection()
         try:
             myCursor = self.mydb.cursor()
-            insert_formula = "INSERT into employee (employee_id, employee_name,employee_country,employee_age,employee_salary) VALUES (%s,%s,%s,%s,%s)"
+            insert_formula = "INSERT into employees (employee_id, employee_name,employee_city,employee_age,employee_salary) VALUES (%s,%s,%s,%s,%s)"
             insert_records = [  (1,'Kinjal','mumbai',25,18000,),
                                 (2,'Dolly','Bangalore',28,22000),
                                 (3,'John','Delhi',30,32000),
@@ -101,8 +101,29 @@ class Views:
         finally:
             self.mydb.close()
 
+    def show_data(self):
+        """
+        Description: 
+            This function is used to show the data.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()    
+            myCursor.execute("SELECT * from employees")
+            result_set = myCursor.fetchall()
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 if __name__ == "__main__":
     views = Views()
     views.create_database()
     views.createTable()
     views.insert_data()
+    views.show_data()
