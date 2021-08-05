@@ -284,6 +284,26 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def drop_procedure(self):
+        '''
+        Description:
+            This function is used to drop a procedure.
+        Parameter:
+            self is an instance of the object.
+        '''
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("DROP PROCEDURE get_merit_student")
+            myCursor.execute("DROP PROCEDURE get_student")
+            myCursor.execute("DROP PROCEDURE display_max_mark")
+            myCursor.execute("DROP PROCEDURE display_marks")
+            print("Successfully dropped all procedures")
+        except Exception as e:
+            logger.error(e)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     storedProcedure = StoredProcedure()
@@ -299,3 +319,4 @@ if __name__ == "__main__":
     storedProcedure.call_out_procedure()
     storedProcedure.inout_parameter()
     storedProcedure.call_inout_procedure()
+    storedProcedure.drop_procedure()
