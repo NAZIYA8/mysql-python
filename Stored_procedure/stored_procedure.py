@@ -227,6 +227,22 @@ class StoredProcedure:
         finally:
             self.mydb.close()
 
+    def call_out_procedure(self):
+        """
+        Description: 
+            This function is used to call OUT procedure
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            result = myCursor.callproc('display_max_mark',['@M'])
+            print(result)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 
 if __name__ == "__main__":
@@ -240,3 +256,4 @@ if __name__ == "__main__":
     storedProcedure.in_parameter()
     storedProcedure.call_in_procedure()
     storedProcedure.out_parameter()
+    storedProcedure.call_out_procedure()
