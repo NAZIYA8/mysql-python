@@ -156,6 +156,23 @@ class Views:
         finally:
             self.mydb.close()
 
+    def update_view(self):
+        """
+        Description: 
+            This function is used to update view.
+        Pararmeter:
+            self is an instance of the object
+        """
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("ALTER VIEW employee_detail AS SELECT employee_name,employee_city,employee_salary FROM employees ")
+            print("\n Updated view successfully")
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 if __name__ == "__main__":
     views = Views()
     views.create_database()
@@ -163,4 +180,6 @@ if __name__ == "__main__":
     views.insert_data()
     views.show_data()
     views.create_view()
+    views.display_view()
+    views.update_view()
     views.display_view()
