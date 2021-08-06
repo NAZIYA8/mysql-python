@@ -166,7 +166,7 @@ class Mysql_Operations:
             logger.error(err)
         finally:
             self.mydb.close()
-            
+
     def like_percent_wildcard(self):
         """
         Description: 
@@ -186,6 +186,7 @@ class Mysql_Operations:
             logger.error(err)
         finally:
             self.mydb.close()
+            
 
 
 if __name__ == "__main__":
