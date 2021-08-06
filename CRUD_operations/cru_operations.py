@@ -193,6 +193,29 @@ class CrudOperations:
             self.mydb.close()
 
 
+    def group_by(self):
+        """
+        Description: 
+            This function is used to fetch data from multiple records and group the result
+            by one or more column
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        crud.show_data()
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT state, COUNT(*) FROM addressbook GROUP BY state")
+            result_set = myCursor.fetchall()
+            for x in result_set:
+                print(x)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 
 if __name__ == "__main__":
     crud = CrudOperations()
@@ -207,5 +230,7 @@ if __name__ == "__main__":
     crud.delete_data()
     print("\nSuccessfully deleted data\n")
     crud.order_by()
-    print("Successfully Sorted data")
+    print("Successfully Sorted data\n")
+    crud.group_by()
+
     
