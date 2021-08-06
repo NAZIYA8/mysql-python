@@ -171,6 +171,27 @@ class CrudOperations:
         finally:
             self.mydb.close()
 
+    def order_by(self):
+        """
+        Description: 
+            This function is used to sort the records in ascending or descending.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        crud.show_data()
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT * FROM addressbook ORDER BY state DESC, city ASC")
+            result_set = myCursor.fetchall()
+            for x in result_set:
+                print(x)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 
 if __name__ == "__main__":
@@ -184,5 +205,7 @@ if __name__ == "__main__":
     crud.update_data()
     print("\nSuccessfully updated data")
     crud.delete_data()
-    print("\nSuccessfully deleted data")
-    crud.show_data()
+    print("\nSuccessfully deleted data\n")
+    crud.order_by()
+    print("Successfully Sorted data")
+    
