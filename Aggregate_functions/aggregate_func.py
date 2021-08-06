@@ -142,6 +142,26 @@ class Aggregate_Functions:
             self.mydb.close()
 
 
+    def sum(self):
+        """
+        Description: 
+            This function is used to find the sum of working hours
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT SUM(working_hours) AS Total_Working_hours FROM employee")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 if __name__ == "__main__":
     aggregate_function = Aggregate_Functions()
     aggregate_function.create_database()
@@ -153,3 +173,5 @@ if __name__ == "__main__":
     print("Successfully Showed data\n")
     aggregate_function.count()
     print("Used count function")
+    aggregate_function.sum()
+    print("Used sum function")
