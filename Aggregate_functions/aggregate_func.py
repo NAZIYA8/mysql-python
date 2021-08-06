@@ -183,7 +183,7 @@ class Aggregate_Functions:
     def minimum(self):
         """
         Description: 
-            This function is used to find the average of working hours
+            This function is used to find the minimum of working hours
         Pararmeter:
             self is an instance of the object
         """
@@ -192,6 +192,44 @@ class Aggregate_Functions:
         try:
             myCursor = self.mydb.cursor()
             myCursor.execute("SELECT MIN(working_hours) AS Minimum_Working_hours FROM employee")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def maximum(self):
+        """
+        Description: 
+            This function is used to find the maximum of working hours
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT MAX(working_hours) AS Maximum_Working_hours FROM employee")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+    def first_func(self):
+        """
+        Description: 
+            This function is used to find the first value from the column
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT working_date FROM employee LIMIT 1")
             result_set = myCursor.fetchall()
             print(result_set)
         except Exception as err:
@@ -217,3 +255,7 @@ if __name__ == "__main__":
     print("Used avg function\n")
     aggregate_function.minimum()
     print("Used min function\n")
+    aggregate_function.maximum()
+    print("Used max function\n")
+    aggregate_function.first_func()
+    print("Used first function\n")
