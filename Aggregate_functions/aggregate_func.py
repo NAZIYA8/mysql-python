@@ -237,6 +237,25 @@ class Aggregate_Functions:
         finally:
             self.mydb.close()
 
+    def last_func(self):
+        """
+        Description: 
+            This function is used to find the last value from the column
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT working_hours FROM employee ORDER BY name DESC LIMIT 1")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     aggregate_function = Aggregate_Functions()
@@ -259,3 +278,5 @@ if __name__ == "__main__":
     print("Used max function\n")
     aggregate_function.first_func()
     print("Used first function\n")
+    aggregate_function.last_func()
+    print("Used last function\n")
