@@ -100,6 +100,28 @@ class Aggregate_Functions:
         finally:
             self.mydb.close()
 
+    def show_data(self):
+        """
+        Description: 
+            This function is used to show the data.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()    
+            myCursor.execute("SELECT * from employee")
+            result_set = myCursor.fetchall()
+            #print(result_set)
+            for data in result_set:
+                print(data)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
+
 if __name__ == "__main__":
     aggregate_function = Aggregate_Functions()
     aggregate_function.create_database()
@@ -107,3 +129,4 @@ if __name__ == "__main__":
     print("\nSuccessfully created table")
     aggregate_function.insert_data()
     print("\nSuccessfully inserted data")
+    aggregate_function.show_data()
