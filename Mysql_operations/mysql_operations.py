@@ -207,6 +207,26 @@ class Mysql_Operations:
         finally:
             self.mydb.close()
 
+    def not_like(self):
+        """
+        Description: 
+            This function is used to show like using not operator
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT first_name FROM addressbook where state NOT LIKE 'Karn%'")
+            result_set = myCursor.fetchall()
+            for x in result_set:
+                print(x)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     operations = Mysql_Operations()
@@ -224,3 +244,5 @@ if __name__ == "__main__":
     print("Successfully performed like percent wildcard search")
     operations.like_underscore_wildcard()
     print("Successfully performed like underscore wildcard search")
+    operations.not_like()
+    print("Successgully used like with NOT operator")
