@@ -186,7 +186,26 @@ class Mysql_Operations:
             logger.error(err)
         finally:
             self.mydb.close()
-            
+
+    def like_underscore_wildcard(self):
+        """
+        Description: 
+            This function is used to show like underscore wildcard search
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT first_name FROM addressbook where city LIKE 'Pan_ji'")
+            result_set = myCursor.fetchall()
+            for x in result_set:
+                print(x)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
 
 
 if __name__ == "__main__":
@@ -203,3 +222,5 @@ if __name__ == "__main__":
     print("\n")
     operations.like_percent_wildcard()
     print("Successfully performed like percent wildcard search")
+    operations.like_underscore_wildcard()
+    print("Successfully performed like underscore wildcard search")
