@@ -125,6 +125,27 @@ class Mysql_Operations:
         finally:
             self.mydb.close()
 
+    def order_by(self):
+        """
+        Description: 
+            This function is used to sort the records in ascending or descending.
+        Pararmeter:
+            self is an instance of the object
+        """
+
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT * FROM addressbook ORDER BY state DESC, city ASC")
+            result_set = myCursor.fetchall()
+            for x in result_set:
+                print(x)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     operations = Mysql_Operations()
@@ -134,3 +155,5 @@ if __name__ == "__main__":
     operations.insert_data()
     print("\nSuccessfully inserted data")
     operations.show_data()
+    operations.order_by()
+    print("Successfully Sorted data\n")
