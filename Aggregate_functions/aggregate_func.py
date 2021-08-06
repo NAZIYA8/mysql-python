@@ -121,6 +121,26 @@ class Aggregate_Functions:
         finally:
             self.mydb.close()
 
+    def count(self):
+        """
+        Description: 
+            This function is used to count
+        Pararmeter:
+            self is an instance of the object
+        """
+
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT COUNT(name) FROM employee")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     aggregate_function = Aggregate_Functions()
@@ -130,3 +150,6 @@ if __name__ == "__main__":
     aggregate_function.insert_data()
     print("\nSuccessfully inserted data")
     aggregate_function.show_data()
+    print("Successfully Showed data\n")
+    aggregate_function.count()
+    print("Used count function")
