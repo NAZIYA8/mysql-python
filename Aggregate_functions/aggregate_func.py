@@ -180,6 +180,25 @@ class Aggregate_Functions:
         finally:
             self.mydb.close()
 
+    def minimum(self):
+        """
+        Description: 
+            This function is used to find the average of working hours
+        Pararmeter:
+            self is an instance of the object
+        """
+
+        self.create_connection()
+        try:
+            myCursor = self.mydb.cursor()
+            myCursor.execute("SELECT MIN(working_hours) AS Minimum_Working_hours FROM employee")
+            result_set = myCursor.fetchall()
+            print(result_set)
+        except Exception as err:
+            logger.error(err)
+        finally:
+            self.mydb.close()
+
 
 if __name__ == "__main__":
     aggregate_function = Aggregate_Functions()
@@ -196,3 +215,5 @@ if __name__ == "__main__":
     print("Used sum function")
     aggregate_function.average()
     print("Used avg function")
+    aggregate_function.minimum()
+    print("Used min function")
